@@ -97,21 +97,7 @@ namespace PhoneBook.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    await EntriesRequestService.PutEntryAsync(entry);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!await EntriesRequestService.EntryExistsAsync(entry.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await EntriesRequestService.PutEntryAsync(entry);
                 return RedirectToAction("Index", new { id = entry.PhoneBookId });
             }
             return View(entry);

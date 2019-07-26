@@ -26,6 +26,10 @@ namespace PhoneBook.Web.Services
                     var data = await response.Content.ReadAsStringAsync();
                     phonebooks = Newtonsoft.Json.JsonConvert.DeserializeObject<IEnumerable<Model.PhoneBook>>(data);                  
                 }
+                else
+                { 
+                    throw new HttpRequestException(response.ToString());
+                }
             }
             return phonebooks;
         }
@@ -44,8 +48,11 @@ namespace PhoneBook.Web.Services
                     Model.PhoneBook phonebook = Newtonsoft.Json.JsonConvert.DeserializeObject<Model.PhoneBook>(data);
                     return phonebook;
                 }
+                else
+                {
+                    throw new HttpRequestException(response.ToString());
+                }
             }
-            return null;
         }
 
         public static async Task<Model.PhoneBook> PutPhoneBookAsync(Model.PhoneBook phoneBook)
@@ -62,8 +69,11 @@ namespace PhoneBook.Web.Services
                     Model.PhoneBook phonebook = Newtonsoft.Json.JsonConvert.DeserializeObject<Model.PhoneBook>(data);
                     return phonebook;
                 }
+                else
+                {
+                    throw new HttpRequestException(response.ToString());
+                }
             }
-            return null;
         }
 
         public static async Task PostPhoneBookAsync(Model.PhoneBook phoneBook)
@@ -74,6 +84,10 @@ namespace PhoneBook.Web.Services
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage response = await client.PostAsJsonAsync(apiUrl + "/PhoneBooks/", phoneBook);
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpRequestException(response.ToString());
+                }
             }
         }
 
@@ -85,6 +99,11 @@ namespace PhoneBook.Web.Services
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage response = await client.DeleteAsync(apiUrl + "/PhoneBooks/" + Id);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpRequestException(response.ToString());
+                }
             }
         }
 
@@ -100,8 +119,11 @@ namespace PhoneBook.Web.Services
                 {
                     return true;
                 }
+                else
+                {
+                    throw new HttpRequestException(response.ToString());
+                }
             }
-            return false;
         }
 
     }

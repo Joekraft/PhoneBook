@@ -88,21 +88,7 @@ namespace PhoneBook.Web
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    phoneBook = await PhoneBookRequestService.PutPhoneBookAsync(phoneBook);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!await PhoneBookRequestService.PhoneBookExistsAsync(phoneBook.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                phoneBook = await PhoneBookRequestService.PutPhoneBookAsync(phoneBook);                           
                 return RedirectToAction(nameof(Index));
             }
             return View(phoneBook);

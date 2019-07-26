@@ -26,6 +26,10 @@ namespace PhoneBook.Web.Services
                     var data = await response.Content.ReadAsStringAsync();
                     entries = Newtonsoft.Json.JsonConvert.DeserializeObject<IEnumerable<Model.Entry>>(data);
                 }
+                else
+                {
+                    throw new HttpRequestException(response.ToString());
+                }
             }
             return entries;
         }
@@ -45,6 +49,10 @@ namespace PhoneBook.Web.Services
                     var data = await response.Content.ReadAsStringAsync();
                     entries = Newtonsoft.Json.JsonConvert.DeserializeObject<IEnumerable<Model.Entry>>(data);
                 }
+                else
+                {
+                    throw new HttpRequestException(response.ToString());
+                }
             }
             return entries;
         }
@@ -63,11 +71,14 @@ namespace PhoneBook.Web.Services
                     Model.Entry entry = Newtonsoft.Json.JsonConvert.DeserializeObject<Model.Entry>(data);
                     return entry;
                 }
-                return null;
+                else
+                {
+                    throw new HttpRequestException(response.ToString());
+                }
             }
         }
 
-        public static async Task<Model.Entry> PostEntryAsync(Entry entry)
+        public static async Task PostEntryAsync(Entry entry)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -75,8 +86,12 @@ namespace PhoneBook.Web.Services
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage response = await client.PostAsJsonAsync(apiUrl + "/Entries/", entry);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpRequestException(response.ToString());
+                }
             }
-            return null;
         }
 
         public static async Task PutEntryAsync(Entry entry)
@@ -86,6 +101,11 @@ namespace PhoneBook.Web.Services
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = await client.PutAsJsonAsync(apiUrl + "/Entries/" + entry.Id, entry);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpRequestException(response.ToString());
+                }
             }
         }
 
@@ -101,8 +121,11 @@ namespace PhoneBook.Web.Services
                 {
                     return true;
                 }
+                else
+                {
+                    throw new HttpRequestException(response.ToString());
+                }
             }
-            return false;
         }
 
         public static async Task DeleteEntryAsync(int Id)
@@ -113,6 +136,11 @@ namespace PhoneBook.Web.Services
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage response = await client.DeleteAsync(apiUrl + "/Entries/" + Id);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpRequestException(response.ToString());
+                }
             }
         }
     }
