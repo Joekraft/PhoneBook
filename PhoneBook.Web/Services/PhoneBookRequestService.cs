@@ -9,7 +9,7 @@ namespace PhoneBook.Web.Services
 {
     public static class PhoneBookRequestService
     {
-        static string apiUrl = "https://localhost:44323/api";
+        static string apiUrl = ConfigurationManager.AppSetting["apiUrl"];
 
         public static async Task<IEnumerable<Model.PhoneBook>> GetPhoneBooksAsync()
         {
