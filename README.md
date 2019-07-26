@@ -2,12 +2,13 @@
 POC for a simple ASP MVC Core website which posts Phone Book entries to a .Net Core API, using Entity Framework for the ORM in a Code First design to a LocalDB database for storage and retrieval.
 
 ### Setup
-Scope to the PhoneBook.API project and create the PhoneBook database
+Scope to the PhoneBook.API project and create the PhoneBook database (requires SQL Server Express)
 * .NET CLI
 ```dotnet ef database update```
 * NuGet Package Manager Console
 ```Update-Database```
 * Run both the PhoneBook.API and PhoneBook.Web projects
+* The API url can be changed in ```appsettings.json```, in the PhoneBook.Web project
 
 ### Use Cases
 * Add entry to my phone book
