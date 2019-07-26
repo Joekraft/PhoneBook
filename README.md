@@ -39,4 +39,3 @@ Scope to the PhoneBook.API project and create the PhoneBook database (requires S
 ### Todo
 * Form validation
 * User facing error messages (when API/DB is down)
-* Move apiURL to appsettings.json Configuration
