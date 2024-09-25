@@ -1,6 +1,8 @@
 # PhoneBook
 POC for a simple ASP MVC Core website which posts Phone Book entries to a .Net Core API, using Entity Framework for the ORM in a Code First design to a LocalDB database for storage and retrieval.
 
+Test2
+
 ### Setup
 Scope to the PhoneBook.API project and create the PhoneBook database (requires SQL Server Express)
 * .NET CLI
